@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/main.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Title: add your Portfolio websites's title here -->
@@ -39,6 +40,12 @@
     <!-- link tags -->
     <link rel="preload" as="style" href="./css/main.css" />
     <link rel="stylesheet" href="./css/main.css" />
+
+<script>
+   (function(){
+      emailjs.init("gUIh_Js-SXeXv19od"); // Replace "user_your_emailjs_user_id" with your EmailJS user ID
+   })();
+</script>
 
     <!-- FontAwesome Icons link -->
     <link
@@ -86,6 +93,8 @@
         </style>
   </head>
   <body>
+    <div id="form-feedback" style="margin-top: 10px;"></div>
+
     <!-- Hero Section -->
     <div id="hero">
       <section class="container">
@@ -171,7 +180,7 @@
               <a href="https://suvedihomes.com/" target="_blank" rel="noopener noreferrer">
                 <div class="thumbnail rounded">
                   <img
-                    src="./assets/project.gif"
+                    src="./assets/P1.jpg"
                     class="img-fluid"
                     alt="Project Image"
                     width="1366"
@@ -209,7 +218,7 @@
 
                 <div class="thumbnail rounded">
                   <img
-                    src="./assets/project.gif"
+                    src="./assets/P2.jpg"
                     class="img-fluid"
                     alt="Project Image"
                     width="1366"
@@ -230,7 +239,7 @@
   <div class="container">
     <h2 class="section-title">Contact</h2>
     <div class="contact-wrapper">
-      <form action="mailto:youremail@example.com" method="post" enctype="text/plain" style="border-radius: 10px; overflow: hidden; padding: 20px; background-color: #f8f9fa;">
+      <form id="contact-form" style="border-radius: 10px; overflow: hidden; padding: 20px; background-color: #f8f9fa;">
         <div class="form-group" style="margin-bottom: 20px;">
           <label for="name" style="font-size: 20px; color: #333;">Name:</label><br>
           <input type="text" id="name" name="name" style="border: none; border-bottom: 1px solid #36d1dc; width: 100%; font-size: 18px; padding: 8px; border-radius: 5px; color: #333;" required><br>
@@ -238,6 +247,10 @@
         <div class="form-group" style="margin-bottom: 20px;">
           <label for="email" style="font-size: 20px; color: #333;">Email:</label><br>
           <input type="email" id="email" name="email" style="border: none; border-bottom: 1px solid #36d1dc; width: 100%; font-size: 18px; padding: 8px; border-radius: 5px; color: #333;" required><br>
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="phone" style="font-size: 20px; color: #333;">Phone Number:</label><br>
+          <input type="tel" id="phone" name="phone" style="border: none; border-bottom: 1px solid #36d1dc; width: 100%; font-size: 18px; padding: 8px; border-radius: 5px; color: #333;" required><br>
         </div>
         <div class="form-group" style="margin-bottom: 20px;">
           <label for="message" style="font-size: 20px; color: #333;">Message:</label><br>
@@ -249,6 +262,32 @@
   </div>
 </section>
 <!-- END Contact Section -->
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+     event.preventDefault(); // Prevent the default form submission
+     
+     // Send the form data to EmailJS
+     emailjs.sendForm('service_834b40h', 'template_uee899e', this)
+        .then(function(response) {
+           console.log('SUCCESS!', response.status, response.text);
+           // Clear the form fields
+           document.getElementById('name').value = '';
+           document.getElementById('email').value = '';
+           document.getElementById('phone').value = '';
+           document.getElementById('message').value = '';
+           // Show a success message on the same page
+           document.getElementById('form-feedback').innerText = 'Thank you for your message! We will get back to you soon.';
+           document.getElementById('form-feedback').style.color = 'green';
+        }, function(error) {
+           console.log('FAILED...', error);
+           // Show an error message on the same page
+           document.getElementById('form-feedback').innerText = 'Oops! Something went wrong. Please try again later.';
+           document.getElementById('form-feedback').style.color = 'red';
+        });
+  });
+</script>
+
+
 
  <!-- Back to Top Button -->
  <a href="#hero" class="back-to-top" id="back-to-top">
